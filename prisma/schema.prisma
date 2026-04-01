@@ -1,8 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Get a free hosted Postgres database in seconds: `npx create-db`
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -10,4 +5,386 @@ generator client {
 
 datasource db {
   provider = "postgresql"
+}
+
+enum CompanyStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum UserRole {
+  ADMIN
+  AGENT
+}
+
+enum UserStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum UserPlatformStatus {
+  ONLINE
+  OFFLINE
+}
+
+enum UserInboxStatus {
+  ONLINE
+  OFFLINE
+}
+
+enum UserAvailabilityStatus {
+  AVAILABLE
+  BUSY
+  BREAK
+  OFF_SHIFT
+}
+
+enum ChannelType {
+  WHATSAPP
+  INSTAGRAM
+  TIKTOK
+  EMAIL
+}
+
+enum ChannelStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+}
+
+enum ConversationStatus {
+  OPEN
+  PENDING
+  CLOSED
+}
+
+enum MessageSenderType {
+  CUSTOMER
+  USER
+  BOT
+  SYSTEM
+}
+
+enum MessageType {
+  TEXT
+  IMAGE
+  AUDIO
+  VIDEO
+  FILE
+  TEMPLATE
+  SYSTEM
+}
+
+enum MessageDirection {
+  INBOUND
+  OUTBOUND
+}
+
+enum TransferRequestStatus {
+  PENDING
+  ACCEPTED
+  REJECTED
+  EXPIRED
+}
+
+enum ExternalContactRequestStatus {
+  RECEIVED
+  REDIRECTED
+  CONVERTED
+  EXPIRED
+}
+
+enum AutomationTriggerType {
+  FIRST_MESSAGE
+  MESSAGE_CONTAINS
+  EXTERNAL_CHANNEL_MESSAGE
+}
+
+enum AutomationActionType {
+  SEND_MESSAGE
+  ASSIGN_USER
+  ADD_TAG
+}
+
+enum SubscriptionProvider {
+  STRIPE
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELED
+  TRIALING
+}
+
+enum SubscriptionPlan {
+  STARTER
+  PRO
+  BUSINESS
+}
+
+model Company {
+  id                      String                   @id @default(cuid())
+  name                    String
+  slug                    String                   @unique
+  status                  CompanyStatus            @default(ACTIVE)
+  createdAt               DateTime                 @default(now()) @map("created_at")
+  updatedAt               DateTime                 @updatedAt @map("updated_at")
+  users                   User[]
+  customers               Customer[]
+  channels                Channel[]
+  conversations           Conversation[]
+  messages                Message[]
+  tags                    Tag[]
+  conversationTags        ConversationTag[]
+  transferRequests        TransferRequest[]
+  externalContactRequests ExternalContactRequest[]
+  automationRules         AutomationRule[]
+  subscription            Subscription?
+
+  @@map("companies")
+}
+
+model User {
+  id                         String            @id @default(cuid())
+  companyId                  String            @map("company_id")
+  name                       String
+  email                      String
+  passwordHash               String            @map("password_hash")
+  role                       UserRole
+  status                     UserStatus        @default(ACTIVE)
+  platformStatus             UserPlatformStatus @default(OFFLINE) @map("platform_status")
+  inboxStatus                UserInboxStatus    @default(OFFLINE) @map("inbox_status")
+  availabilityStatus         UserAvailabilityStatus @default(AVAILABLE) @map("availability_status")
+  maxActiveConversations     Int               @default(5) @map("max_active_conversations")
+  lastSeenAt                 DateTime?         @map("last_seen_at")
+  createdAt                  DateTime          @default(now()) @map("created_at")
+  updatedAt                  DateTime          @updatedAt @map("updated_at")
+  company                    Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  assignedConversations      Conversation[]    @relation("ConversationAssignee")
+  sentMessages               Message[]         @relation("MessageSenderUser")
+  transferRequestsFromUser   TransferRequest[] @relation("TransferRequestFromUser")
+  transferRequestsToUser     TransferRequest[] @relation("TransferRequestToUser")
+
+  @@unique([email])
+  @@index([companyId])
+  @@index([companyId, status])
+  @@index([companyId, inboxStatus, availabilityStatus])
+  @@map("users")
+}
+
+model Customer {
+  id            String         @id @default(cuid())
+  companyId     String         @map("company_id")
+  name          String?
+  phone         String?
+  email         String?
+  notes         String?
+  createdAt     DateTime       @default(now()) @map("created_at")
+  updatedAt     DateTime       @updatedAt @map("updated_at")
+  company       Company        @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+
+  @@unique([companyId, phone])
+  @@unique([companyId, email])
+  @@index([companyId])
+  @@map("customers")
+}
+
+model Channel {
+  id                      String                   @id @default(cuid())
+  companyId               String                   @map("company_id")
+  type                    ChannelType
+  name                    String
+  status                  ChannelStatus            @default(PENDING)
+  externalAccountId       String?                  @map("external_account_id")
+  accessToken             String?                  @map("access_token")
+  phoneNumber             String?                  @map("phone_number")
+  webhookVerifyToken      String?                  @map("webhook_verify_token")
+  metadata                Json?
+  createdAt               DateTime                 @default(now()) @map("created_at")
+  updatedAt               DateTime                 @updatedAt @map("updated_at")
+  company                 Company                  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversations           Conversation[]
+  messages                Message[]
+  externalContactRequests ExternalContactRequest[]
+
+  @@index([companyId])
+  @@index([companyId, type])
+  @@map("channels")
+}
+
+model Conversation {
+  id                    String             @id @default(cuid())
+  companyId             String             @map("company_id")
+  customerId            String             @map("customer_id")
+  channelId             String             @map("channel_id")
+  assignedUserId        String?            @map("assigned_user_id")
+  status                ConversationStatus @default(OPEN)
+  subject               String?
+  lastMessagePreview    String?            @map("last_message_preview")
+  lastMessageAt         DateTime?          @map("last_message_at")
+  lastCustomerMessageAt DateTime?          @map("last_customer_message_at")
+  unreadCount           Int                @default(0) @map("unread_count")
+  createdAt             DateTime           @default(now()) @map("created_at")
+  updatedAt             DateTime           @updatedAt @map("updated_at")
+  closedAt              DateTime?          @map("closed_at")
+  company               Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  customer              Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  channel               Channel            @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  assignedUser          User?              @relation("ConversationAssignee", fields: [assignedUserId], references: [id], onDelete: SetNull)
+  messages              Message[]
+  conversationTags      ConversationTag[]
+  transferRequests      TransferRequest[]
+
+  @@index([companyId])
+  @@index([companyId, status])
+  @@index([companyId, assignedUserId])
+  @@index([companyId, lastMessageAt])
+  @@index([customerId])
+  @@index([channelId])
+  @@map("conversations")
+}
+
+model Message {
+  id                String             @id @default(cuid())
+  companyId         String             @map("company_id")
+  conversationId    String             @map("conversation_id")
+  channelId         String             @map("channel_id")
+  externalMessageId String?            @unique @map("external_message_id")
+  senderType        MessageSenderType  @map("sender_type")
+  senderUserId      String?            @map("sender_user_id")
+  content           String?
+  messageType       MessageType        @map("message_type")
+  direction         MessageDirection
+  sentAt            DateTime?          @map("sent_at")
+  deliveredAt       DateTime?          @map("delivered_at")
+  readAt            DateTime?          @map("read_at")
+  createdAt         DateTime           @default(now()) @map("created_at")
+  rawPayload        Json?              @map("raw_payload")
+  company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversation      Conversation       @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  channel           Channel            @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  senderUser        User?              @relation("MessageSenderUser", fields: [senderUserId], references: [id], onDelete: SetNull)
+
+  @@index([companyId])
+  @@index([conversationId])
+  @@index([channelId])
+  @@index([createdAt])
+  @@index([companyId, createdAt])
+  @@map("messages")
+}
+
+model Tag {
+  id               String            @id @default(cuid())
+  companyId        String            @map("company_id")
+  name             String
+  color            String?
+  createdAt        DateTime          @default(now()) @map("created_at")
+  updatedAt        DateTime          @updatedAt @map("updated_at")
+  company          Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversationTags ConversationTag[]
+
+  @@unique([companyId, name])
+  @@index([companyId])
+  @@map("tags")
+}
+
+model ConversationTag {
+  companyId      String       @map("company_id")
+  conversationId String       @map("conversation_id")
+  tagId          String       @map("tag_id")
+  createdAt      DateTime     @default(now()) @map("created_at")
+  company        Company      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversation   Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  tag            Tag          @relation(fields: [tagId], references: [id], onDelete: Cascade)
+
+  @@id([conversationId, tagId])
+  @@index([companyId])
+  @@index([tagId])
+  @@map("conversation_tags")
+}
+
+model TransferRequest {
+  id             String                @id @default(cuid())
+  companyId      String                @map("company_id")
+  conversationId String                @map("conversation_id")
+  fromUserId     String                @map("from_user_id")
+  toUserId       String                @map("to_user_id")
+  status         TransferRequestStatus @default(PENDING)
+  reason         String?
+  createdAt      DateTime              @default(now()) @map("created_at")
+  expiresAt      DateTime              @map("expires_at")
+  respondedAt    DateTime?             @map("responded_at")
+  company        Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversation   Conversation          @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  fromUser       User                  @relation("TransferRequestFromUser", fields: [fromUserId], references: [id], onDelete: Cascade)
+  toUser         User                  @relation("TransferRequestToUser", fields: [toUserId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([conversationId])
+  @@index([fromUserId])
+  @@index([toUserId])
+  @@index([status, expiresAt])
+  @@map("transfer_requests")
+}
+
+model ExternalContactRequest {
+  id                    String                       @id @default(cuid())
+  companyId             String                       @map("company_id")
+  channelId             String                       @map("channel_id")
+  protocol              String
+  externalContactId     String?                      @map("external_contact_id")
+  customerName          String?                      @map("customer_name")
+  customerHandle        String?                      @map("customer_handle")
+  messageContent        String?                      @map("message_content")
+  status                ExternalContactRequestStatus @default(RECEIVED)
+  redirectWhatsappNumber String?                     @map("redirect_whatsapp_number")
+  createdAt             DateTime                     @default(now()) @map("created_at")
+  updatedAt             DateTime                     @updatedAt @map("updated_at")
+  company               Company                      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  channel               Channel                      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, protocol])
+  @@index([companyId])
+  @@index([channelId])
+  @@index([status])
+  @@map("external_contact_requests")
+}
+
+model AutomationRule {
+  id          String                @id @default(cuid())
+  companyId   String                @map("company_id")
+  name        String
+  triggerType AutomationTriggerType @map("trigger_type")
+  triggerValue Json?                @map("trigger_value")
+  actionType  AutomationActionType  @map("action_type")
+  actionValue Json?                 @map("action_value")
+  isActive    Boolean               @default(true) @map("is_active")
+  createdAt   DateTime              @default(now()) @map("created_at")
+  updatedAt   DateTime              @updatedAt @map("updated_at")
+  company     Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([companyId])
+  @@index([companyId, isActive])
+  @@map("automation_rules")
+}
+
+model Subscription {
+  id                     String               @id @default(cuid())
+  companyId              String               @unique @map("company_id")
+  provider               SubscriptionProvider
+  providerCustomerId     String?              @map("provider_customer_id")
+  providerSubscriptionId String?              @map("provider_subscription_id")
+  plan                   SubscriptionPlan
+  status                 SubscriptionStatus
+  currentPeriodStart     DateTime?            @map("current_period_start")
+  currentPeriodEnd       DateTime?            @map("current_period_end")
+  createdAt              DateTime             @default(now()) @map("created_at")
+  updatedAt              DateTime             @updatedAt @map("updated_at")
+  company                Company              @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerSubscriptionId])
+  @@index([status])
+  @@map("subscriptions")
 }

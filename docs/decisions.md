@@ -40,3 +40,14 @@ Motivo:
 - diferenciar conta ativa de capacidade operacional
 - diferenciar presença na plataforma de presença na inbox
 - suportar distribuição automática de conversas sem persistir contadores complexos no MVP
+
+## Horário de funcionamento
+
+Persistimos o horário de funcionamento semanal em uma entidade própria `BusinessHour`.
+
+Motivo:
+
+- mantém o dado normalizado e consultável
+- evita acoplar regra de negócio em JSON de `Company` ou `Channel`
+- permite múltiplos intervalos no mesmo dia
+- facilita o chatbot decidir se a empresa está aberta no momento

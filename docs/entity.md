@@ -30,6 +30,7 @@ updatedAt
 - possui muitas `TransferRequest`
 - possui muitas `ExternalContactRequest`
 - possui muitas `AutomationRule`
+- possui muitos `BusinessHour`
 - possui uma `Subscription`
 
 **Observação**
@@ -179,6 +180,45 @@ status: ACTIVE | INACTIVE | PENDING
 - possui muitas `Conversation`
 - possui muitas `Message`
 - possui muitas `ExternalContactRequest`
+
+## BusinessHour
+
+Representa um intervalo recorrente de funcionamento da empresa em um dia da semana.
+
+**Responsabilidades**
+
+- persistir a grade semanal de atendimento
+- permitir múltiplos intervalos no mesmo dia
+- servir de base para regras futuras do chatbot e automações
+
+**Atributos principais**
+
+```
+id
+companyId
+dayOfWeek
+opensAt
+closesAt
+createdAt
+updatedAt
+```
+
+**Enums possíveis**
+
+```
+dayOfWeek: SUNDAY | MONDAY | TUESDAY | WEDNESDAY | THURSDAY | FRIDAY | SATURDAY
+```
+
+**Observações**
+
+- ausência de registro para um dia significa empresa fechada
+- múltiplas linhas no mesmo dia permitem almoço ou janelas separadas
+- `opensAt` e `closesAt` usam formato `HH:MM`
+- a aplicação deve impedir intervalos sobrepostos para a mesma empresa e dia
+
+**Relacionamentos**
+
+- pertence a `Company`
 
 ## Conversation
 
@@ -502,6 +542,7 @@ plan: STARTER | PRO | BUSINESS
 - `Company` 1:N `User`
 - `Company` 1:N `Customer`
 - `Company` 1:N `Channel`
+- `Company` 1:N `BusinessHour`
 - `Company` 1:N `Conversation`
 - `Company` 1:N `Message`
 - `Company` 1:N `Tag`

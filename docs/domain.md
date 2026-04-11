@@ -6,6 +6,7 @@
 - User
 - Customer
 - Channel
+- BusinessHour
 - Conversation
 - Message
 - Tag

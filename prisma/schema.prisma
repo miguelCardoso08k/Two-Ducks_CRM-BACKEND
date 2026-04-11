@@ -122,6 +122,16 @@ enum SubscriptionPlan {
   PRO
   BUSINESS
 }
+enum Weekday {
+  SUNDAY
+  MONDAY
+  TUESDAY
+  WEDNESDAY
+  THURSDAY
+  FRIDAY
+  SATURDAY
+}
+
 
 model Company {
   id                      String                   @id @default(cuid())
@@ -139,10 +149,26 @@ model Company {
   conversationTags        ConversationTag[]
   transferRequests        TransferRequest[]
   externalContactRequests ExternalContactRequest[]
+  businessHours           BusinessHour[]
   automationRules         AutomationRule[]
   subscription            Subscription?
 
   @@map("companies")
+}
+model BusinessHour {
+  id        String   @id @default(cuid())
+  companyId String   @map("company_id")
+  dayOfWeek Weekday  @map("day_of_week")
+  opensAt   String   @map("opens_at")
+  closesAt  String   @map("closes_at")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  company   Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@unique([companyId, dayOfWeek, opensAt, closesAt])
+  @@index([companyId])
+  @@index([companyId, dayOfWeek])
+  @@map("business_hours")
 }
 
 model User {

@@ -1,7 +1,7 @@
 import { UserEntity } from '../entities/user.entity';
 import { UserAvailabilityStatusEnum } from '../enums/user-availability-status.enum';
 import { UserInboxStatusEnum } from '../enums/user-inbox-status.enum';
-import { UserPlataformStatusEnum } from '../enums/user-plataform-status.enum';
+import { UserPlatformStatusEnum } from '../enums/user-platform-status.enum';
 import { UserRoleEnum } from '../enums/user-role.enum';
 import { UserStatusEnum } from '../enums/user-status.enum';
 
@@ -24,7 +24,7 @@ export abstract class UserRepository {
   ): Promise<UserEntity>;
   abstract updatePlatformStatus(
     id: string,
-    platformStatus: UserPlataformStatusEnum,
+    platformStatus: UserPlatformStatusEnum,
   ): Promise<UserEntity>;
   abstract updateInboxStatus(
     id: string,

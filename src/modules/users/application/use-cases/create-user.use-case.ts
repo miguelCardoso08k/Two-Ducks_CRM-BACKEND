@@ -4,7 +4,7 @@ import { CreateUserDto } from '../dto/create-user.dto';
 import { UserEntity } from '../../domain/entities/user.entity';
 import { UserRoleEnum } from '../../domain/enums/user-role.enum';
 import { UserStatusEnum } from '../../domain/enums/user-status.enum';
-import { UserPlataformStatusEnum } from '../../domain/enums/user-plataform-status.enum';
+import { UserPlatformStatusEnum } from '../../domain/enums/user-platform-status.enum';
 import { UserInboxStatusEnum } from '../../domain/enums/user-inbox-status.enum';
 import { UserAvailabilityStatusEnum } from '../../domain/enums/user-availability-status.enum';
 
@@ -30,7 +30,7 @@ export class CreateUserUseCase {
       password: '000000', // TODO: Generate a random password and send it to the user via email
       role: dto.role || UserRoleEnum.AGENT,
       status: UserStatusEnum.ACTIVE,
-      platformStatus: UserPlataformStatusEnum.OFFLINE,
+      platformStatus: UserPlatformStatusEnum.OFFLINE,
       inboxStatus: UserInboxStatusEnum.OFFLINE,
       availabilityStatus: UserAvailabilityStatusEnum.OFF_SHIFT,
       maxActiveConversations: dto.maxActiveConversations || 5,

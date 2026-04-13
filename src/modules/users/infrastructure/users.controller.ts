@@ -31,7 +31,7 @@ export class UsersController {
   constructor(
     private readonly createUserUseCase: CreateUserUseCase,
     private readonly findByIdUserUseCase: FindByIdUserUseCase,
-    private readonly findbyCompanyUserUseCase: FindByCompanyUserUseCase,
+    private readonly findByCompanyUserUseCase: FindByCompanyUserUseCase,
     private readonly findByNameUserUseCase: FindByNameUserUseCase,
     private readonly updateEmailUserUseCase: UpdateEmailUserUseCase,
     private readonly updateRoleUserUseCase: UpdateRoleUserUseCase,
@@ -56,7 +56,7 @@ export class UsersController {
 
   @Get()
   async findAll(@Param('companyId') companyId: string) {
-    const users = await this.findbyCompanyUserUseCase.execute(companyId);
+    const users = await this.findByCompanyUserUseCase.execute(companyId);
 
     return {
       message: 'Users found successfully',

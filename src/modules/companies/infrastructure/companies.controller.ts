@@ -9,22 +9,22 @@ import {
 } from '@nestjs/common';
 import { FindByIdCompanyUseCase } from '../application/use-cases/find-by-id-company.use-case';
 import { CreateCompanyUseCase } from '../application/use-cases/create-company.use-case';
-import { UpddateSlugCompanyUseCase } from '../application/use-cases/update-slug-company.use-case';
+import { UpdateSlugCompanyUseCase } from '../application/use-cases/update-slug-company.use-case';
 import { DeleteCompanyUseCase } from '../application/use-cases/delete-company.use-case';
 import { CreateCompanyDto } from '../application/dto/create-company.dto';
-import { updateSlugCompanyDto } from '../application/dto/update-slug.company.dto';
-import { updateStatusCompanyDto } from '../application/dto/update-status.company.dto';
-import { updateNameCompanyDto } from '../application/dto/update-name-company.dto';
+import { UpdateSlugCompanyDto } from '../application/dto/update-slug-company.dto';
+import { UpdateStatusCompanyDto } from '../application/dto/update-status-company.dto';
+import { UpdateNameCompanyDto } from '../application/dto/update-name-company.dto';
 import { CompanyMapper } from './mappers/company.mapper';
-import { UpdateNameCompanyUseCase } from '../application/use-cases/update-name-company.use.case';
+import { UpdateNameCompanyUseCase } from '../application/use-cases/update-name-company.use-case';
 import { UpdateStatusCompanyUseCase } from '../application/use-cases/update-status-company.use-case';
 
 @Controller('companies')
 export class CompaniesController {
   constructor(
     private readonly createCompanyUseCase: CreateCompanyUseCase,
-    private readonly findCompanyIdUseCase: FindByIdCompanyUseCase,
-    private readonly updateSlugCompanyUseCase: UpddateSlugCompanyUseCase,
+    private readonly findByIdCompanyUseCase: FindByIdCompanyUseCase,
+    private readonly updateSlugCompanyUseCase: UpdateSlugCompanyUseCase,
     private readonly updateStatusCompanyUseCase: UpdateStatusCompanyUseCase,
     private readonly updateNameCompanyUseCase: UpdateNameCompanyUseCase,
     private readonly deleteCompanyUseCase: DeleteCompanyUseCase,
@@ -42,7 +42,7 @@ export class CompaniesController {
 
   @Get(':id')
   async findById(@Param('id') id: string) {
-    const company = await this.findCompanyIdUseCase.execute(id);
+    const company = await this.findByIdCompanyUseCase.execute(id);
 
     return {
       message: 'Company found successfully',
@@ -51,7 +51,7 @@ export class CompaniesController {
   }
 
   @Patch(':id/name')
-  async updateName(@Param('id') id: string, @Body() dto: updateNameCompanyDto) {
+  async updateName(@Param('id') id: string, @Body() dto: UpdateNameCompanyDto) {
     const company = await this.updateNameCompanyUseCase.execute(id, dto.name);
 
     return {
@@ -61,7 +61,7 @@ export class CompaniesController {
   }
 
   @Patch(':id/slug')
-  async updateSlug(@Param('id') id: string, @Body() dto: updateSlugCompanyDto) {
+  async updateSlug(@Param('id') id: string, @Body() dto: UpdateSlugCompanyDto) {
     const company = await this.updateSlugCompanyUseCase.execute(id, dto.slug);
 
     return {
@@ -73,7 +73,7 @@ export class CompaniesController {
   @Patch(':id/status')
   async updateStatus(
     @Param('id') id: string,
-    @Body() dto: updateStatusCompanyDto,
+    @Body() dto: UpdateStatusCompanyDto,
   ) {
     const company = await this.updateStatusCompanyUseCase.execute(
       id,

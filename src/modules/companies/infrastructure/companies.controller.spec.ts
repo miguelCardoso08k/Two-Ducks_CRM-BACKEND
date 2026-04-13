@@ -2,9 +2,9 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreateCompanyUseCase } from '../application/use-cases/create-company.use-case';
 import { DeleteCompanyUseCase } from '../application/use-cases/delete-company.use-case';
 import { FindByIdCompanyUseCase } from '../application/use-cases/find-by-id-company.use-case';
-import { UpdateNameCompanyUseCase } from '../application/use-cases/update-name-company.use.case';
+import { UpdateNameCompanyUseCase } from '../application/use-cases/update-name-company.use-case';
 import { UpdateStatusCompanyUseCase } from '../application/use-cases/update-status-company.use-case';
-import { UpddateSlugCompanyUseCase } from '../application/use-cases/update-slug-company.use-case';
+import { UpdateSlugCompanyUseCase } from '../application/use-cases/update-slug-company.use-case';
 import { CompaniesController } from './companies.controller';
 
 describe('CompaniesController', () => {
@@ -19,7 +19,7 @@ describe('CompaniesController', () => {
         FindByIdCompanyUseCase,
         UpdateNameCompanyUseCase,
         UpdateStatusCompanyUseCase,
-        UpddateSlugCompanyUseCase,
+        UpdateSlugCompanyUseCase,
       ],
     }).compile();
 

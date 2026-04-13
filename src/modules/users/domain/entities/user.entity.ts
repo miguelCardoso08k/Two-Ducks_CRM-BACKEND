@@ -2,7 +2,7 @@ import { UserRoleEnum } from '../enums/user-role.enum';
 import { UserStatusEnum } from '../enums/user-status.enum';
 import { UserInboxStatusEnum } from '../enums/user-inbox-status.enum';
 import { UserAvailabilityStatusEnum } from '../enums/user-availability-status.enum';
-import { UserPlataformStatusEnum } from '../enums/user-plataform-status.enum';
+import { UserPlatformStatusEnum } from '../enums/user-platform-status.enum';
 
 type UserProps = {
   id?: string;
@@ -14,7 +14,7 @@ type UserProps = {
   password: string;
   role: UserRoleEnum;
   status: UserStatusEnum;
-  platformStatus: UserPlataformStatusEnum;
+  platformStatus: UserPlatformStatusEnum;
   inboxStatus: UserInboxStatusEnum;
   availabilityStatus: UserAvailabilityStatusEnum;
   maxActiveConversations: number;

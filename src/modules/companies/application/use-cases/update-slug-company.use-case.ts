@@ -2,7 +2,7 @@ import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { CompanyRepository } from '../../domain/repositories/company.repository';
 
 @Injectable()
-export class UpddateSlugCompanyUseCase {
+export class UpdateSlugCompanyUseCase {
   constructor(
     @Inject(CompanyRepository)
     private readonly companyRepository: CompanyRepository,

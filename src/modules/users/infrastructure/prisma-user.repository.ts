@@ -4,7 +4,7 @@ import { UserEntity } from '../domain/entities/user.entity';
 import { UserMapper } from './mappers/user.mapper';
 import { UserRoleEnum } from '../domain/enums/user-role.enum';
 import { UserStatusEnum } from '../domain/enums/user-status.enum';
-import { UserPlataformStatusEnum } from '../domain/enums/user-plataform-status.enum';
+import { UserPlatformStatusEnum } from '../domain/enums/user-platform-status.enum';
 import { UserInboxStatusEnum } from '../domain/enums/user-inbox-status.enum';
 import { UserAvailabilityStatusEnum } from '../domain/enums/user-availability-status.enum';
 
@@ -102,7 +102,7 @@ export class PrismaUserRepository {
 
   async updatePlatformStatus(
     id: string,
-    platformStatus: UserPlataformStatusEnum,
+    platformStatus: UserPlatformStatusEnum,
   ): Promise<UserEntity> {
     const updated = await this.prisma.user.update({
       where: { id },

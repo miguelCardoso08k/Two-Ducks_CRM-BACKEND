@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../src/generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -122,6 +123,7 @@ enum SubscriptionPlan {
   PRO
   BUSINESS
 }
+
 enum Weekday {
   SUNDAY
   MONDAY
@@ -131,7 +133,6 @@ enum Weekday {
   FRIDAY
   SATURDAY
 }
-
 
 model Company {
   id                      String                   @id @default(cuid())
@@ -149,12 +150,13 @@ model Company {
   conversationTags        ConversationTag[]
   transferRequests        TransferRequest[]
   externalContactRequests ExternalContactRequest[]
-  businessHours           BusinessHour[]
   automationRules         AutomationRule[]
+  businessHours           BusinessHour[]
   subscription            Subscription?
 
   @@map("companies")
 }
+
 model BusinessHour {
   id        String   @id @default(cuid())
   companyId String   @map("company_id")
@@ -172,27 +174,28 @@ model BusinessHour {
 }
 
 model User {
-  id                         String            @id @default(cuid())
-  companyId                  String            @map("company_id")
-  name                       String
-  email                      String
-  passwordHash               String            @map("password_hash")
-  role                       UserRole
-  status                     UserStatus        @default(ACTIVE)
-  platformStatus             UserPlatformStatus @default(OFFLINE) @map("platform_status")
-  inboxStatus                UserInboxStatus    @default(OFFLINE) @map("inbox_status")
-  availabilityStatus         UserAvailabilityStatus @default(AVAILABLE) @map("availability_status")
-  maxActiveConversations     Int               @default(5) @map("max_active_conversations")
-  lastSeenAt                 DateTime?         @map("last_seen_at")
-  createdAt                  DateTime          @default(now()) @map("created_at")
-  updatedAt                  DateTime          @updatedAt @map("updated_at")
-  company                    Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  assignedConversations      Conversation[]    @relation("ConversationAssignee")
-  sentMessages               Message[]         @relation("MessageSenderUser")
-  transferRequestsFromUser   TransferRequest[] @relation("TransferRequestFromUser")
-  transferRequestsToUser     TransferRequest[] @relation("TransferRequestToUser")
+  id                       String                 @id @default(cuid())
+  companyId                String                 @map("company_id")
+  firstName                String
+  lastName                 String
+  email                    String                 @unique
+  password                 String                 @map("password_hash")
+  firstLogin               Boolean                @default(true) @map("first_login")
+  role                     UserRole
+  status                   UserStatus             @default(ACTIVE)
+  platformStatus           UserPlatformStatus     @default(OFFLINE) @map("platform_status")
+  inboxStatus              UserInboxStatus        @default(OFFLINE) @map("inbox_status")
+  availabilityStatus       UserAvailabilityStatus @default(AVAILABLE) @map("availability_status")
+  maxActiveConversations   Int                    @default(5) @map("max_active_conversations")
+  lastSeenAt               DateTime?              @map("last_seen_at")
+  createdAt                DateTime               @default(now()) @map("created_at")
+  updatedAt                DateTime               @updatedAt @map("updated_at")
+  company                  Company                @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  assignedConversations    Conversation[]         @relation("ConversationAssignee")
+  sentMessages             Message[]              @relation("MessageSenderUser")
+  transferRequestsFromUser TransferRequest[]      @relation("TransferRequestFromUser")
+  transferRequestsToUser   TransferRequest[]      @relation("TransferRequestToUser")
 
-  @@unique([email])
   @@index([companyId])
   @@index([companyId, status])
   @@index([companyId, inboxStatus, availabilityStatus])
@@ -273,25 +276,25 @@ model Conversation {
 }
 
 model Message {
-  id                String             @id @default(cuid())
-  companyId         String             @map("company_id")
-  conversationId    String             @map("conversation_id")
-  channelId         String             @map("channel_id")
-  externalMessageId String?            @unique @map("external_message_id")
-  senderType        MessageSenderType  @map("sender_type")
-  senderUserId      String?            @map("sender_user_id")
+  id                String            @id @default(cuid())
+  companyId         String            @map("company_id")
+  conversationId    String            @map("conversation_id")
+  channelId         String            @map("channel_id")
+  externalMessageId String?           @unique @map("external_message_id")
+  senderType        MessageSenderType @map("sender_type")
+  senderUserId      String?           @map("sender_user_id")
   content           String?
-  messageType       MessageType        @map("message_type")
+  messageType       MessageType       @map("message_type")
   direction         MessageDirection
-  sentAt            DateTime?          @map("sent_at")
-  deliveredAt       DateTime?          @map("delivered_at")
-  readAt            DateTime?          @map("read_at")
-  createdAt         DateTime           @default(now()) @map("created_at")
-  rawPayload        Json?              @map("raw_payload")
-  company           Company            @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  conversation      Conversation       @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  channel           Channel            @relation(fields: [channelId], references: [id], onDelete: Cascade)
-  senderUser        User?              @relation("MessageSenderUser", fields: [senderUserId], references: [id], onDelete: SetNull)
+  sentAt            DateTime?         @map("sent_at")
+  deliveredAt       DateTime?         @map("delivered_at")
+  readAt            DateTime?         @map("read_at")
+  createdAt         DateTime          @default(now()) @map("created_at")
+  rawPayload        Json?             @map("raw_payload")
+  company           Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  conversation      Conversation      @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  channel           Channel           @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  senderUser        User?             @relation("MessageSenderUser", fields: [senderUserId], references: [id], onDelete: SetNull)
 
   @@index([companyId])
   @@index([conversationId])
@@ -356,20 +359,20 @@ model TransferRequest {
 }
 
 model ExternalContactRequest {
-  id                    String                       @id @default(cuid())
-  companyId             String                       @map("company_id")
-  channelId             String                       @map("channel_id")
-  protocol              String
-  externalContactId     String?                      @map("external_contact_id")
-  customerName          String?                      @map("customer_name")
-  customerHandle        String?                      @map("customer_handle")
-  messageContent        String?                      @map("message_content")
-  status                ExternalContactRequestStatus @default(RECEIVED)
-  redirectWhatsappNumber String?                     @map("redirect_whatsapp_number")
-  createdAt             DateTime                     @default(now()) @map("created_at")
-  updatedAt             DateTime                     @updatedAt @map("updated_at")
-  company               Company                      @relation(fields: [companyId], references: [id], onDelete: Cascade)
-  channel               Channel                      @relation(fields: [channelId], references: [id], onDelete: Cascade)
+  id                     String                       @id @default(cuid())
+  companyId              String                       @map("company_id")
+  channelId              String                       @map("channel_id")
+  protocol               String
+  externalContactId      String?                      @map("external_contact_id")
+  customerName           String?                      @map("customer_name")
+  customerHandle         String?                      @map("customer_handle")
+  messageContent         String?                      @map("message_content")
+  status                 ExternalContactRequestStatus @default(RECEIVED)
+  redirectWhatsappNumber String?                      @map("redirect_whatsapp_number")
+  createdAt              DateTime                     @default(now()) @map("created_at")
+  updatedAt              DateTime                     @updatedAt @map("updated_at")
+  company                Company                      @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  channel                Channel                      @relation(fields: [channelId], references: [id], onDelete: Cascade)
 
   @@unique([companyId, protocol])
   @@index([companyId])
@@ -379,17 +382,17 @@ model ExternalContactRequest {
 }
 
 model AutomationRule {
-  id          String                @id @default(cuid())
-  companyId   String                @map("company_id")
-  name        String
-  triggerType AutomationTriggerType @map("trigger_type")
-  triggerValue Json?                @map("trigger_value")
-  actionType  AutomationActionType  @map("action_type")
-  actionValue Json?                 @map("action_value")
-  isActive    Boolean               @default(true) @map("is_active")
-  createdAt   DateTime              @default(now()) @map("created_at")
-  updatedAt   DateTime              @updatedAt @map("updated_at")
-  company     Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  id           String                @id @default(cuid())
+  companyId    String                @map("company_id")
+  name         String
+  triggerType  AutomationTriggerType @map("trigger_type")
+  triggerValue Json?                 @map("trigger_value")
+  actionType   AutomationActionType  @map("action_type")
+  actionValue  Json?                 @map("action_value")
+  isActive     Boolean               @default(true) @map("is_active")
+  createdAt    DateTime              @default(now()) @map("created_at")
+  updatedAt    DateTime              @updatedAt @map("updated_at")
+  company      Company               @relation(fields: [companyId], references: [id], onDelete: Cascade)
 
   @@index([companyId])
   @@index([companyId, isActive])

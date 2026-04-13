@@ -36,6 +36,7 @@ Ao final desta sprint, o backend deve ser capaz de:
 - [ ] criar `authorization guards` ou camada equivalente de proteção
 - [ ] revisar os `repositories` já existentes sob a ótica de tenant safety
 - [ ] adicionar pelo menos um caminho de teste focado em isolamento
+- [ ] corrigir a estrutura de testes das rotas e implementar a base correta para `controller specs` e testes futuros
 
 ## Definition of Done da Sprint
 
@@ -65,7 +66,10 @@ Ao final desta sprint, o backend deve ser capaz de:
 
 ## Notas em Andamento
 
-- nenhum trabalho iniciado ainda
+- estrutura inicial de `AuthModule` criada
+- `AuthGuard`, `RolesGuard` e middleware de request context implementados
+- hashing de senha provisória movido para o contrato de `PasswordHasherRepository`
+- débito técnico identificado na base de testes das rotas e incluído no escopo da sprint
 
 ## Bloqueios
 

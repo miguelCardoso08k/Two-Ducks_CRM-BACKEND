@@ -7,7 +7,7 @@
 - [x] Configurar variaveis de ambiente
 - [x] Configurar Prisma com PostgreSQL
 - [ ] Configurar Redis para cache, fila e eventos em tempo real
-- [x] Definir estrutura modular em `modules/controller/service/repository`
+- [x] Definir estrutura modular em `modules/application/domain/infrastructure`
 - [x] Garantir que acesso ao banco aconteca apenas via repository
 
 ## Multi-tenant
@@ -143,7 +143,7 @@
 ## API e padroes
 
 - [ ] Seguir padrao REST inicial
-- [x] Retornar resposta no formato `{ data, error }`
+- [x] Padronizar resposta HTTP como `message + data` ou apenas `message`
 - [ ] Mapear erros 400, 401, 403 e 404
 - [x] Validar payloads de entrada
 - [x] Padronizar nomes: camelCase no codigo, PascalCase em classes, snake_case no banco

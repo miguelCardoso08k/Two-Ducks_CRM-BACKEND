@@ -6,12 +6,28 @@ GET /conversations
 POST /messages
 PATCH /conversations/:id
 
-## Resposta padrão
+## Resposta padrão oficial
 
+Nos módulos atuais, os `controllers` retornam principalmente:
+
+```json
 {
-  "data": {},
-  "error": null
+  "message": "User created successfully",
+  "data": {}
 }
+```
+
+Ou, em operações sem payload:
+
+```json
+{
+  "message": "User deleted successfully"
+}
+```
+
+Quando não houver payload, o retorno pode conter apenas `message`.
+
+Esse é o padrão oficial do projeto.
 
 ## Erros
 

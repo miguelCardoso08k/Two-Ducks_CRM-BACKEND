@@ -7,11 +7,16 @@ import { UserStatusEnum } from '../../domain/enums/user-status.enum';
 import { UserPlatformStatusEnum } from '../../domain/enums/user-platform-status.enum';
 import { UserInboxStatusEnum } from '../../domain/enums/user-inbox-status.enum';
 import { UserAvailabilityStatusEnum } from '../../domain/enums/user-availability-status.enum';
+import { PasswordHasherRepository } from 'src/modules/auth/domain/repositories/password-hasher.repository';
 
 @Injectable()
 export class CreateUserUseCase {
+  private static readonly TEMPORARY_PASSWORD = '0000';
+
   constructor(
     @Inject(UserRepository) private readonly userRepository: UserRepository,
+    @Inject(PasswordHasherRepository)
+    private readonly passwordHasherRepository: PasswordHasherRepository,
   ) {}
 
   async execute(companyId: string, dto: CreateUserDto) {
@@ -21,13 +26,17 @@ export class CreateUserUseCase {
       throw new ConflictException('User with this email already exists');
     }
 
+    const temporaryPasswordHash = await this.passwordHasherRepository.hash(
+      CreateUserUseCase.TEMPORARY_PASSWORD,
+    );
+
     const user = new UserEntity({
       companyId: companyId,
       firstName: dto.firstName,
       lastName: dto.lastName,
       firstLogin: true,
       email: dto.email,
-      password: '000000', // TODO: Generate a random password and send it to the user via email
+      password: temporaryPasswordHash,
       role: dto.role || UserRoleEnum.AGENT,
       status: UserStatusEnum.ACTIVE,
       platformStatus: UserPlatformStatusEnum.OFFLINE,

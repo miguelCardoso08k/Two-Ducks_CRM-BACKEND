@@ -16,7 +16,11 @@ export abstract class UserRepository {
     data: { firstName: string; lastName: string },
   ): Promise<UserEntity>;
   abstract updateEmail(id: string, email: string): Promise<UserEntity>;
-  abstract updatePassword(id: string, password: string): Promise<UserEntity>;
+  abstract updatePassword(
+    id: string,
+    password: string,
+    firstLogin: boolean,
+  ): Promise<UserEntity>;
   abstract updateRole(id: string, role: UserRoleEnum): Promise<UserEntity>;
   abstract updateStatus(
     id: string,

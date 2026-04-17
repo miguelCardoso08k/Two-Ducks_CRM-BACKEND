@@ -3,13 +3,15 @@ import {
   Injectable,
   ForbiddenException,
   UnauthorizedException,
+  InternalServerErrorException,
 } from '@nestjs/common';
 import { LoginDto } from '../dto/login.dto';
 import { UserRepository } from 'src/modules/users/domain/repositories/user.repository';
 import { UserStatusEnum } from 'src/modules/users/domain/enums/user-status.enum';
-import { PasswordHasherRepository } from '../../domain/repositories/password-hasher.repository';
+import { PasswordHasherRepository } from 'src/core/security/password-hash/domain/repositories/password-hasher.repository';
 import { TokenRepository } from '../../domain/repositories/token.repository';
 import { AuthenticatedUserEntity } from '../../domain/entities/authenticated-user.entity';
+import { UserPlatformStatusEnum } from 'src/modules/users/domain/enums/user-platform-status.enum';
 
 @Injectable()
 export class LoginUseCase {
@@ -41,19 +43,33 @@ export class LoginUseCase {
       throw new ForbiddenException('User is inactive');
     }
 
-    const authenticatedUser = new AuthenticatedUserEntity({
-      id: user.id!,
-      companyId: user.companyId,
-      email: user.email,
-      role: user.role,
-    });
+    await this.userRepository.updatePlatformStatus(
+      user.id!,
+      UserPlatformStatusEnum.ONLINE,
+    );
 
-    const accessToken =
-      await this.tokenRepository.signAccessToken(authenticatedUser);
+    try {
+      const authenticatedUser = new AuthenticatedUserEntity({
+        id: user.id!,
+        companyId: user.companyId,
+        email: user.email,
+        role: user.role,
+      });
 
-    return {
-      accessToken,
-      user: authenticatedUser,
-    };
+      const accessToken =
+        await this.tokenRepository.signAccessToken(authenticatedUser);
+
+      return {
+        accessToken,
+        user: authenticatedUser,
+      };
+    } catch {
+      await this.userRepository.updatePlatformStatus(
+        user.id!,
+        UserPlatformStatusEnum.OFFLINE,
+      );
+
+      throw new InternalServerErrorException('Login failed');
+    }
   }
 }

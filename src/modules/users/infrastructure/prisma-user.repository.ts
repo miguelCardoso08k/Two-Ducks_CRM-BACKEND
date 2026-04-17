@@ -7,9 +7,10 @@ import { UserStatusEnum } from '../domain/enums/user-status.enum';
 import { UserPlatformStatusEnum } from '../domain/enums/user-platform-status.enum';
 import { UserInboxStatusEnum } from '../domain/enums/user-inbox-status.enum';
 import { UserAvailabilityStatusEnum } from '../domain/enums/user-availability-status.enum';
+import { UserRepository } from '../domain/repositories/user.repository';
 
 @Injectable()
-export class PrismaUserRepository {
+export class PrismaUserRepository implements UserRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async create(user: UserEntity): Promise<UserEntity> {
@@ -73,10 +74,14 @@ export class PrismaUserRepository {
     return UserMapper.toEntity(updated);
   }
 
-  async updatePassword(id: string, password: string): Promise<UserEntity> {
+  async updatePassword(
+    id: string,
+    password: string,
+    firstLogin: boolean,
+  ): Promise<UserEntity> {
     const updated = await this.prisma.user.update({
       where: { id },
-      data: { password },
+      data: { password, firstLogin },
     });
 
     return UserMapper.toEntity(updated);

@@ -1,4 +1,4 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { UsersController } from './infrastructure/users.controller';
 import { UserRepository } from './domain/repositories/user.repository';
 import { PrismaUserRepository } from './infrastructure/prisma-user.repository';
@@ -12,10 +12,10 @@ import { UpdateStatusUserUseCase } from './application/use-cases/update-status-u
 import { UpdateRoleUserUseCase } from './application/use-cases/update-role-user.use-case';
 import { UpdateMaxActiveConversationsUserUseCase } from './application/use-cases/update-max-active-conversations-user.use-case';
 import { DeleteUserUseCase } from './application/use-cases/delete-user.use-case';
-import { AuthModule } from '../auth/auth.module';
+import { PasswordHashModule } from 'src/core/security/password-hash/password-hash.module';
 
 @Module({
-  imports: [forwardRef(() => AuthModule)],
+  imports: [PasswordHashModule],
   controllers: [UsersController],
   providers: [
     { provide: UserRepository, useClass: PrismaUserRepository },

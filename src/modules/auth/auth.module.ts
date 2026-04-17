@@ -1,21 +1,22 @@
-import { forwardRef, Module } from '@nestjs/common';
+import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { LogoutUseCase } from './application/use-cases/logout.use-case';
 import { LoginUseCase } from './application/use-cases/login.use-case';
 import { AuthController } from './infrastructure/auth.controller';
 import { UsersModule } from '../users/users.module';
-import { PasswordHasherRepository } from './domain/repositories/password-hasher.repository';
 import { TokenRepository } from './domain/repositories/token.repository';
-import { BcryptPasswordHasherRepository } from './infrastructure/bcrypt-password-hasher.repository';
 import { JwtTokenRepository } from './infrastructure/jwt-token.repository';
 import { AuthGuard } from './infrastructure/guards/auth.guard';
 import { RolesGuard } from './infrastructure/guards/roles.guard';
+import { PasswordHashModule } from 'src/core/security/password-hash/password-hash.module';
 
 @Module({
   imports: [
     ConfigModule,
-    forwardRef(() => UsersModule),
+    PasswordHashModule,
+    UsersModule,
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => {
@@ -34,10 +35,6 @@ import { RolesGuard } from './infrastructure/guards/roles.guard';
   ],
   controllers: [AuthController],
   providers: [
-    {
-      provide: PasswordHasherRepository,
-      useClass: BcryptPasswordHasherRepository,
-    },
     { provide: TokenRepository, useClass: JwtTokenRepository },
     {
       provide: APP_GUARD,
@@ -48,7 +45,8 @@ import { RolesGuard } from './infrastructure/guards/roles.guard';
       useClass: RolesGuard,
     },
     LoginUseCase,
+    LogoutUseCase,
   ],
-  exports: [PasswordHasherRepository, TokenRepository, AuthGuard, RolesGuard],
+  exports: [TokenRepository, AuthGuard, RolesGuard],
 })
 export class AuthModule {}

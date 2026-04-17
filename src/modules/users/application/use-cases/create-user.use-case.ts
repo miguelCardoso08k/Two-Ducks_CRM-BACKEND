@@ -7,7 +7,7 @@ import { UserStatusEnum } from '../../domain/enums/user-status.enum';
 import { UserPlatformStatusEnum } from '../../domain/enums/user-platform-status.enum';
 import { UserInboxStatusEnum } from '../../domain/enums/user-inbox-status.enum';
 import { UserAvailabilityStatusEnum } from '../../domain/enums/user-availability-status.enum';
-import { PasswordHasherRepository } from 'src/modules/auth/domain/repositories/password-hasher.repository';
+import { PasswordHasherRepository } from 'src/core/security/password-hash/domain/repositories/password-hasher.repository';
 
 @Injectable()
 export class CreateUserUseCase {

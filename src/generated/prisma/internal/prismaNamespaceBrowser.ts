@@ -54,6 +54,7 @@ export const ModelName = {
   Company: 'Company',
   BusinessHour: 'BusinessHour',
   User: 'User',
+  AuthSession: 'AuthSession',
   Customer: 'Customer',
   Channel: 'Channel',
   Conversation: 'Conversation',
@@ -127,6 +128,21 @@ export const UserScalarFieldEnum = {
 } as const
 
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum]
+
+
+export const AuthSessionScalarFieldEnum = {
+  id: 'id',
+  jti: 'jti',
+  userId: 'userId',
+  companyId: 'companyId',
+  status: 'status',
+  expiresAt: 'expiresAt',
+  revokedAt: 'revokedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AuthSessionScalarFieldEnum = (typeof AuthSessionScalarFieldEnum)[keyof typeof AuthSessionScalarFieldEnum]
 
 
 export const CustomerScalarFieldEnum = {

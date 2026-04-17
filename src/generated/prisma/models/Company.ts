@@ -202,6 +202,7 @@ export type CompanyWhereInput = {
   automationRules?: Prisma.AutomationRuleListRelationFilter
   businessHours?: Prisma.BusinessHourListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  authSessions?: Prisma.AuthSessionListRelationFilter
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -223,6 +224,7 @@ export type CompanyOrderByWithRelationInput = {
   automationRules?: Prisma.AutomationRuleOrderByRelationAggregateInput
   businessHours?: Prisma.BusinessHourOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  authSessions?: Prisma.AuthSessionOrderByRelationAggregateInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -247,6 +249,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   automationRules?: Prisma.AutomationRuleListRelationFilter
   businessHours?: Prisma.BusinessHourListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  authSessions?: Prisma.AuthSessionListRelationFilter
 }, "id" | "slug">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -292,6 +295,7 @@ export type CompanyCreateInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -313,6 +317,7 @@ export type CompanyUncheckedCreateInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -334,6 +339,7 @@ export type CompanyUpdateInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -355,6 +361,7 @@ export type CompanyUncheckedUpdateInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -454,6 +461,20 @@ export type CompanyUpdateOneRequiredWithoutUsersNestedInput = {
   upsert?: Prisma.CompanyUpsertWithoutUsersInput
   connect?: Prisma.CompanyWhereUniqueInput
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutUsersInput, Prisma.CompanyUpdateWithoutUsersInput>, Prisma.CompanyUncheckedUpdateWithoutUsersInput>
+}
+
+export type CompanyCreateNestedOneWithoutAuthSessionsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutAuthSessionsInput, Prisma.CompanyUncheckedCreateWithoutAuthSessionsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutAuthSessionsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutAuthSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutAuthSessionsInput, Prisma.CompanyUncheckedCreateWithoutAuthSessionsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutAuthSessionsInput
+  upsert?: Prisma.CompanyUpsertWithoutAuthSessionsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutAuthSessionsInput, Prisma.CompanyUpdateWithoutAuthSessionsInput>, Prisma.CompanyUncheckedUpdateWithoutAuthSessionsInput>
 }
 
 export type CompanyCreateNestedOneWithoutCustomersInput = {
@@ -614,6 +635,7 @@ export type CompanyCreateWithoutBusinessHoursInput = {
   externalContactRequests?: Prisma.ExternalContactRequestCreateNestedManyWithoutCompanyInput
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutBusinessHoursInput = {
@@ -634,6 +656,7 @@ export type CompanyUncheckedCreateWithoutBusinessHoursInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUncheckedCreateNestedManyWithoutCompanyInput
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutBusinessHoursInput = {
@@ -670,6 +693,7 @@ export type CompanyUpdateWithoutBusinessHoursInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUpdateManyWithoutCompanyNestedInput
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutBusinessHoursInput = {
@@ -690,6 +714,7 @@ export type CompanyUncheckedUpdateWithoutBusinessHoursInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUncheckedUpdateManyWithoutCompanyNestedInput
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutUsersInput = {
@@ -710,6 +735,7 @@ export type CompanyCreateWithoutUsersInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutUsersInput = {
@@ -730,6 +756,7 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutUsersInput = {
@@ -766,6 +793,7 @@ export type CompanyUpdateWithoutUsersInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutUsersInput = {
@@ -775,6 +803,107 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   status?: Prisma.EnumCompanyStatusFieldUpdateOperationsInput | $Enums.CompanyStatus
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  channels?: Prisma.ChannelUncheckedUpdateManyWithoutCompanyNestedInput
+  conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCompanyNestedInput
+  tags?: Prisma.TagUncheckedUpdateManyWithoutCompanyNestedInput
+  conversationTags?: Prisma.ConversationTagUncheckedUpdateManyWithoutCompanyNestedInput
+  transferRequests?: Prisma.TransferRequestUncheckedUpdateManyWithoutCompanyNestedInput
+  externalContactRequests?: Prisma.ExternalContactRequestUncheckedUpdateManyWithoutCompanyNestedInput
+  automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
+  businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutAuthSessionsInput = {
+  id?: string
+  name: string
+  slug: string
+  status?: $Enums.CompanyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  channels?: Prisma.ChannelCreateNestedManyWithoutCompanyInput
+  conversations?: Prisma.ConversationCreateNestedManyWithoutCompanyInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCompanyInput
+  tags?: Prisma.TagCreateNestedManyWithoutCompanyInput
+  conversationTags?: Prisma.ConversationTagCreateNestedManyWithoutCompanyInput
+  transferRequests?: Prisma.TransferRequestCreateNestedManyWithoutCompanyInput
+  externalContactRequests?: Prisma.ExternalContactRequestCreateNestedManyWithoutCompanyInput
+  automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
+  businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutAuthSessionsInput = {
+  id?: string
+  name: string
+  slug: string
+  status?: $Enums.CompanyStatus
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  channels?: Prisma.ChannelUncheckedCreateNestedManyWithoutCompanyInput
+  conversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutCompanyInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCompanyInput
+  tags?: Prisma.TagUncheckedCreateNestedManyWithoutCompanyInput
+  conversationTags?: Prisma.ConversationTagUncheckedCreateNestedManyWithoutCompanyInput
+  transferRequests?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutCompanyInput
+  externalContactRequests?: Prisma.ExternalContactRequestUncheckedCreateNestedManyWithoutCompanyInput
+  automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
+  businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutAuthSessionsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutAuthSessionsInput, Prisma.CompanyUncheckedCreateWithoutAuthSessionsInput>
+}
+
+export type CompanyUpsertWithoutAuthSessionsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutAuthSessionsInput, Prisma.CompanyUncheckedUpdateWithoutAuthSessionsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutAuthSessionsInput, Prisma.CompanyUncheckedCreateWithoutAuthSessionsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutAuthSessionsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutAuthSessionsInput, Prisma.CompanyUncheckedUpdateWithoutAuthSessionsInput>
+}
+
+export type CompanyUpdateWithoutAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCompanyStatusFieldUpdateOperationsInput | $Enums.CompanyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  channels?: Prisma.ChannelUpdateManyWithoutCompanyNestedInput
+  conversations?: Prisma.ConversationUpdateManyWithoutCompanyNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCompanyNestedInput
+  tags?: Prisma.TagUpdateManyWithoutCompanyNestedInput
+  conversationTags?: Prisma.ConversationTagUpdateManyWithoutCompanyNestedInput
+  transferRequests?: Prisma.TransferRequestUpdateManyWithoutCompanyNestedInput
+  externalContactRequests?: Prisma.ExternalContactRequestUpdateManyWithoutCompanyNestedInput
+  automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
+  businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  slug?: Prisma.StringFieldUpdateOperationsInput | string
+  status?: Prisma.EnumCompanyStatusFieldUpdateOperationsInput | $Enums.CompanyStatus
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
   channels?: Prisma.ChannelUncheckedUpdateManyWithoutCompanyNestedInput
   conversations?: Prisma.ConversationUncheckedUpdateManyWithoutCompanyNestedInput
@@ -806,6 +935,7 @@ export type CompanyCreateWithoutCustomersInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutCustomersInput = {
@@ -826,6 +956,7 @@ export type CompanyUncheckedCreateWithoutCustomersInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutCustomersInput = {
@@ -862,6 +993,7 @@ export type CompanyUpdateWithoutCustomersInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutCustomersInput = {
@@ -882,6 +1014,7 @@ export type CompanyUncheckedUpdateWithoutCustomersInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutChannelsInput = {
@@ -902,6 +1035,7 @@ export type CompanyCreateWithoutChannelsInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutChannelsInput = {
@@ -922,6 +1056,7 @@ export type CompanyUncheckedCreateWithoutChannelsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutChannelsInput = {
@@ -958,6 +1093,7 @@ export type CompanyUpdateWithoutChannelsInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutChannelsInput = {
@@ -978,6 +1114,7 @@ export type CompanyUncheckedUpdateWithoutChannelsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutConversationsInput = {
@@ -998,6 +1135,7 @@ export type CompanyCreateWithoutConversationsInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutConversationsInput = {
@@ -1018,6 +1156,7 @@ export type CompanyUncheckedCreateWithoutConversationsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutConversationsInput = {
@@ -1054,6 +1193,7 @@ export type CompanyUpdateWithoutConversationsInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutConversationsInput = {
@@ -1074,6 +1214,7 @@ export type CompanyUncheckedUpdateWithoutConversationsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutMessagesInput = {
@@ -1094,6 +1235,7 @@ export type CompanyCreateWithoutMessagesInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutMessagesInput = {
@@ -1114,6 +1256,7 @@ export type CompanyUncheckedCreateWithoutMessagesInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutMessagesInput = {
@@ -1150,6 +1293,7 @@ export type CompanyUpdateWithoutMessagesInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutMessagesInput = {
@@ -1170,6 +1314,7 @@ export type CompanyUncheckedUpdateWithoutMessagesInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutTagsInput = {
@@ -1190,6 +1335,7 @@ export type CompanyCreateWithoutTagsInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutTagsInput = {
@@ -1210,6 +1356,7 @@ export type CompanyUncheckedCreateWithoutTagsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutTagsInput = {
@@ -1246,6 +1393,7 @@ export type CompanyUpdateWithoutTagsInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutTagsInput = {
@@ -1266,6 +1414,7 @@ export type CompanyUncheckedUpdateWithoutTagsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutConversationTagsInput = {
@@ -1286,6 +1435,7 @@ export type CompanyCreateWithoutConversationTagsInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutConversationTagsInput = {
@@ -1306,6 +1456,7 @@ export type CompanyUncheckedCreateWithoutConversationTagsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutConversationTagsInput = {
@@ -1342,6 +1493,7 @@ export type CompanyUpdateWithoutConversationTagsInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutConversationTagsInput = {
@@ -1362,6 +1514,7 @@ export type CompanyUncheckedUpdateWithoutConversationTagsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutTransferRequestsInput = {
@@ -1382,6 +1535,7 @@ export type CompanyCreateWithoutTransferRequestsInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutTransferRequestsInput = {
@@ -1402,6 +1556,7 @@ export type CompanyUncheckedCreateWithoutTransferRequestsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutTransferRequestsInput = {
@@ -1438,6 +1593,7 @@ export type CompanyUpdateWithoutTransferRequestsInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutTransferRequestsInput = {
@@ -1458,6 +1614,7 @@ export type CompanyUncheckedUpdateWithoutTransferRequestsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutExternalContactRequestsInput = {
@@ -1478,6 +1635,7 @@ export type CompanyCreateWithoutExternalContactRequestsInput = {
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutExternalContactRequestsInput = {
@@ -1498,6 +1656,7 @@ export type CompanyUncheckedCreateWithoutExternalContactRequestsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutExternalContactRequestsInput = {
@@ -1534,6 +1693,7 @@ export type CompanyUpdateWithoutExternalContactRequestsInput = {
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutExternalContactRequestsInput = {
@@ -1554,6 +1714,7 @@ export type CompanyUncheckedUpdateWithoutExternalContactRequestsInput = {
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutAutomationRulesInput = {
@@ -1574,6 +1735,7 @@ export type CompanyCreateWithoutAutomationRulesInput = {
   externalContactRequests?: Prisma.ExternalContactRequestCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutAutomationRulesInput = {
@@ -1594,6 +1756,7 @@ export type CompanyUncheckedCreateWithoutAutomationRulesInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutAutomationRulesInput = {
@@ -1630,6 +1793,7 @@ export type CompanyUpdateWithoutAutomationRulesInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutAutomationRulesInput = {
@@ -1650,6 +1814,7 @@ export type CompanyUncheckedUpdateWithoutAutomationRulesInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutSubscriptionInput = {
@@ -1670,6 +1835,7 @@ export type CompanyCreateWithoutSubscriptionInput = {
   externalContactRequests?: Prisma.ExternalContactRequestCreateNestedManyWithoutCompanyInput
   automationRules?: Prisma.AutomationRuleCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourCreateNestedManyWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutSubscriptionInput = {
@@ -1690,6 +1856,7 @@ export type CompanyUncheckedCreateWithoutSubscriptionInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUncheckedCreateNestedManyWithoutCompanyInput
   automationRules?: Prisma.AutomationRuleUncheckedCreateNestedManyWithoutCompanyInput
   businessHours?: Prisma.BusinessHourUncheckedCreateNestedManyWithoutCompanyInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutSubscriptionInput = {
@@ -1726,6 +1893,7 @@ export type CompanyUpdateWithoutSubscriptionInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUpdateManyWithoutCompanyNestedInput
   automationRules?: Prisma.AutomationRuleUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUpdateManyWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutSubscriptionInput = {
@@ -1746,6 +1914,7 @@ export type CompanyUncheckedUpdateWithoutSubscriptionInput = {
   externalContactRequests?: Prisma.ExternalContactRequestUncheckedUpdateManyWithoutCompanyNestedInput
   automationRules?: Prisma.AutomationRuleUncheckedUpdateManyWithoutCompanyNestedInput
   businessHours?: Prisma.BusinessHourUncheckedUpdateManyWithoutCompanyNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -1765,6 +1934,7 @@ export type CompanyCountOutputType = {
   externalContactRequests: number
   automationRules: number
   businessHours: number
+  authSessions: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1779,6 +1949,7 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   externalContactRequests?: boolean | CompanyCountOutputTypeCountExternalContactRequestsArgs
   automationRules?: boolean | CompanyCountOutputTypeCountAutomationRulesArgs
   businessHours?: boolean | CompanyCountOutputTypeCountBusinessHoursArgs
+  authSessions?: boolean | CompanyCountOutputTypeCountAuthSessionsArgs
 }
 
 /**
@@ -1868,6 +2039,13 @@ export type CompanyCountOutputTypeCountBusinessHoursArgs<ExtArgs extends runtime
   where?: Prisma.BusinessHourWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountAuthSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthSessionWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1888,6 +2066,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   automationRules?: boolean | Prisma.Company$automationRulesArgs<ExtArgs>
   businessHours?: boolean | Prisma.Company$businessHoursArgs<ExtArgs>
   subscription?: boolean | Prisma.Company$subscriptionArgs<ExtArgs>
+  authSessions?: boolean | Prisma.Company$authSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -1932,6 +2111,7 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   automationRules?: boolean | Prisma.Company$automationRulesArgs<ExtArgs>
   businessHours?: boolean | Prisma.Company$businessHoursArgs<ExtArgs>
   subscription?: boolean | Prisma.Company$subscriptionArgs<ExtArgs>
+  authSessions?: boolean | Prisma.Company$authSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1952,6 +2132,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     automationRules: Prisma.$AutomationRulePayload<ExtArgs>[]
     businessHours: Prisma.$BusinessHourPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    authSessions: Prisma.$AuthSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -2366,6 +2547,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   automationRules<T extends Prisma.Company$automationRulesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$automationRulesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AutomationRulePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   businessHours<T extends Prisma.Company$businessHoursArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$businessHoursArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$BusinessHourPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.Company$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  authSessions<T extends Prisma.Company$authSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$authSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -3074,6 +3256,30 @@ export type Company$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.SubscriptionInclude<ExtArgs> | null
   where?: Prisma.SubscriptionWhereInput
+}
+
+/**
+ * Company.authSessions
+ */
+export type Company$authSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthSession
+   */
+  select?: Prisma.AuthSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthSession
+   */
+  omit?: Prisma.AuthSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthSessionInclude<ExtArgs> | null
+  where?: Prisma.AuthSessionWhereInput
+  orderBy?: Prisma.AuthSessionOrderByWithRelationInput | Prisma.AuthSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AuthSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
 }
 
 /**

@@ -59,6 +59,15 @@ export const UserAvailabilityStatus = {
 export type UserAvailabilityStatus = (typeof UserAvailabilityStatus)[keyof typeof UserAvailabilityStatus]
 
 
+export const AuthSessionStatus = {
+  ACTIVE: 'ACTIVE',
+  REVOKED: 'REVOKED',
+  EXPIRED: 'EXPIRED'
+} as const
+
+export type AuthSessionStatus = (typeof AuthSessionStatus)[keyof typeof AuthSessionStatus]
+
+
 export const ChannelType = {
   WHATSAPP: 'WHATSAPP',
   INSTAGRAM: 'INSTAGRAM',

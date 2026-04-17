@@ -309,6 +309,7 @@ export type UserWhereInput = {
   sentMessages?: Prisma.MessageListRelationFilter
   transferRequestsFromUser?: Prisma.TransferRequestListRelationFilter
   transferRequestsToUser?: Prisma.TransferRequestListRelationFilter
+  authSessions?: Prisma.AuthSessionListRelationFilter
 }
 
 export type UserOrderByWithRelationInput = {
@@ -333,6 +334,7 @@ export type UserOrderByWithRelationInput = {
   sentMessages?: Prisma.MessageOrderByRelationAggregateInput
   transferRequestsFromUser?: Prisma.TransferRequestOrderByRelationAggregateInput
   transferRequestsToUser?: Prisma.TransferRequestOrderByRelationAggregateInput
+  authSessions?: Prisma.AuthSessionOrderByRelationAggregateInput
 }
 
 export type UserWhereUniqueInput = Prisma.AtLeast<{
@@ -360,6 +362,7 @@ export type UserWhereUniqueInput = Prisma.AtLeast<{
   sentMessages?: Prisma.MessageListRelationFilter
   transferRequestsFromUser?: Prisma.TransferRequestListRelationFilter
   transferRequestsToUser?: Prisma.TransferRequestListRelationFilter
+  authSessions?: Prisma.AuthSessionListRelationFilter
 }, "id" | "email">
 
 export type UserOrderByWithAggregationInput = {
@@ -429,6 +432,7 @@ export type UserCreateInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateInput = {
@@ -452,6 +456,7 @@ export type UserUncheckedCreateInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserUpdateInput = {
@@ -475,6 +480,7 @@ export type UserUpdateInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateInput = {
@@ -498,6 +504,7 @@ export type UserUncheckedUpdateInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyInput = {
@@ -631,14 +638,14 @@ export type UserSumOrderByAggregateInput = {
   maxActiveConversations?: Prisma.SortOrder
 }
 
-export type UserNullableScalarRelationFilter = {
-  is?: Prisma.UserWhereInput | null
-  isNot?: Prisma.UserWhereInput | null
-}
-
 export type UserScalarRelationFilter = {
   is?: Prisma.UserWhereInput
   isNot?: Prisma.UserWhereInput
+}
+
+export type UserNullableScalarRelationFilter = {
+  is?: Prisma.UserWhereInput | null
+  isNot?: Prisma.UserWhereInput | null
 }
 
 export type UserCreateNestedManyWithoutCompanyInput = {
@@ -717,6 +724,20 @@ export type IntFieldUpdateOperationsInput = {
 
 export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
+}
+
+export type UserCreateNestedOneWithoutAuthSessionsInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+}
+
+export type UserUpdateOneRequiredWithoutAuthSessionsNestedInput = {
+  create?: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+  connectOrCreate?: Prisma.UserCreateOrConnectWithoutAuthSessionsInput
+  upsert?: Prisma.UserUpsertWithoutAuthSessionsInput
+  connect?: Prisma.UserWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAuthSessionsInput, Prisma.UserUpdateWithoutAuthSessionsInput>, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
 }
 
 export type UserCreateNestedOneWithoutAssignedConversationsInput = {
@@ -799,6 +820,7 @@ export type UserCreateWithoutCompanyInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutCompanyInput = {
@@ -821,6 +843,7 @@ export type UserUncheckedCreateWithoutCompanyInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutCompanyInput = {
@@ -871,6 +894,114 @@ export type UserScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string
 }
 
+export type UserCreateWithoutAuthSessionsInput = {
+  id?: string
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  firstLogin?: boolean
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  platformStatus?: $Enums.UserPlatformStatus
+  inboxStatus?: $Enums.UserInboxStatus
+  availabilityStatus?: $Enums.UserAvailabilityStatus
+  maxActiveConversations?: number
+  lastSeenAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutUsersInput
+  assignedConversations?: Prisma.ConversationCreateNestedManyWithoutAssignedUserInput
+  sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderUserInput
+  transferRequestsFromUser?: Prisma.TransferRequestCreateNestedManyWithoutFromUserInput
+  transferRequestsToUser?: Prisma.TransferRequestCreateNestedManyWithoutToUserInput
+}
+
+export type UserUncheckedCreateWithoutAuthSessionsInput = {
+  id?: string
+  companyId: string
+  firstName: string
+  lastName: string
+  email: string
+  password: string
+  firstLogin?: boolean
+  role: $Enums.UserRole
+  status?: $Enums.UserStatus
+  platformStatus?: $Enums.UserPlatformStatus
+  inboxStatus?: $Enums.UserInboxStatus
+  availabilityStatus?: $Enums.UserAvailabilityStatus
+  maxActiveConversations?: number
+  lastSeenAt?: Date | string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  assignedConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedUserInput
+  sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderUserInput
+  transferRequestsFromUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutFromUserInput
+  transferRequestsToUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutToUserInput
+}
+
+export type UserCreateOrConnectWithoutAuthSessionsInput = {
+  where: Prisma.UserWhereUniqueInput
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+}
+
+export type UserUpsertWithoutAuthSessionsInput = {
+  update: Prisma.XOR<Prisma.UserUpdateWithoutAuthSessionsInput, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
+  create: Prisma.XOR<Prisma.UserCreateWithoutAuthSessionsInput, Prisma.UserUncheckedCreateWithoutAuthSessionsInput>
+  where?: Prisma.UserWhereInput
+}
+
+export type UserUpdateToOneWithWhereWithoutAuthSessionsInput = {
+  where?: Prisma.UserWhereInput
+  data: Prisma.XOR<Prisma.UserUpdateWithoutAuthSessionsInput, Prisma.UserUncheckedUpdateWithoutAuthSessionsInput>
+}
+
+export type UserUpdateWithoutAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformStatus?: Prisma.EnumUserPlatformStatusFieldUpdateOperationsInput | $Enums.UserPlatformStatus
+  inboxStatus?: Prisma.EnumUserInboxStatusFieldUpdateOperationsInput | $Enums.UserInboxStatus
+  availabilityStatus?: Prisma.EnumUserAvailabilityStatusFieldUpdateOperationsInput | $Enums.UserAvailabilityStatus
+  maxActiveConversations?: Prisma.IntFieldUpdateOperationsInput | number
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutUsersNestedInput
+  assignedConversations?: Prisma.ConversationUpdateManyWithoutAssignedUserNestedInput
+  sentMessages?: Prisma.MessageUpdateManyWithoutSenderUserNestedInput
+  transferRequestsFromUser?: Prisma.TransferRequestUpdateManyWithoutFromUserNestedInput
+  transferRequestsToUser?: Prisma.TransferRequestUpdateManyWithoutToUserNestedInput
+}
+
+export type UserUncheckedUpdateWithoutAuthSessionsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  firstName?: Prisma.StringFieldUpdateOperationsInput | string
+  lastName?: Prisma.StringFieldUpdateOperationsInput | string
+  email?: Prisma.StringFieldUpdateOperationsInput | string
+  password?: Prisma.StringFieldUpdateOperationsInput | string
+  firstLogin?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
+  status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus
+  platformStatus?: Prisma.EnumUserPlatformStatusFieldUpdateOperationsInput | $Enums.UserPlatformStatus
+  inboxStatus?: Prisma.EnumUserInboxStatusFieldUpdateOperationsInput | $Enums.UserInboxStatus
+  availabilityStatus?: Prisma.EnumUserAvailabilityStatusFieldUpdateOperationsInput | $Enums.UserAvailabilityStatus
+  maxActiveConversations?: Prisma.IntFieldUpdateOperationsInput | number
+  lastSeenAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  assignedConversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedUserNestedInput
+  sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderUserNestedInput
+  transferRequestsFromUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutFromUserNestedInput
+  transferRequestsToUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutToUserNestedInput
+}
+
 export type UserCreateWithoutAssignedConversationsInput = {
   id?: string
   firstName: string
@@ -891,6 +1022,7 @@ export type UserCreateWithoutAssignedConversationsInput = {
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutAssignedConversationsInput = {
@@ -913,6 +1045,7 @@ export type UserUncheckedCreateWithoutAssignedConversationsInput = {
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutAssignedConversationsInput = {
@@ -951,6 +1084,7 @@ export type UserUpdateWithoutAssignedConversationsInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutAssignedConversationsInput = {
@@ -973,6 +1107,7 @@ export type UserUncheckedUpdateWithoutAssignedConversationsInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutSentMessagesInput = {
@@ -995,6 +1130,7 @@ export type UserCreateWithoutSentMessagesInput = {
   assignedConversations?: Prisma.ConversationCreateNestedManyWithoutAssignedUserInput
   transferRequestsFromUser?: Prisma.TransferRequestCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutSentMessagesInput = {
@@ -1017,6 +1153,7 @@ export type UserUncheckedCreateWithoutSentMessagesInput = {
   assignedConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedUserInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutFromUserInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutSentMessagesInput = {
@@ -1055,6 +1192,7 @@ export type UserUpdateWithoutSentMessagesInput = {
   assignedConversations?: Prisma.ConversationUpdateManyWithoutAssignedUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutSentMessagesInput = {
@@ -1077,6 +1215,7 @@ export type UserUncheckedUpdateWithoutSentMessagesInput = {
   assignedConversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateWithoutTransferRequestsFromUserInput = {
@@ -1099,6 +1238,7 @@ export type UserCreateWithoutTransferRequestsFromUserInput = {
   assignedConversations?: Prisma.ConversationCreateNestedManyWithoutAssignedUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderUserInput
   transferRequestsToUser?: Prisma.TransferRequestCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransferRequestsFromUserInput = {
@@ -1121,6 +1261,7 @@ export type UserUncheckedCreateWithoutTransferRequestsFromUserInput = {
   assignedConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderUserInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutToUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransferRequestsFromUserInput = {
@@ -1148,6 +1289,7 @@ export type UserCreateWithoutTransferRequestsToUserInput = {
   assignedConversations?: Prisma.ConversationCreateNestedManyWithoutAssignedUserInput
   sentMessages?: Prisma.MessageCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestCreateNestedManyWithoutFromUserInput
+  authSessions?: Prisma.AuthSessionCreateNestedManyWithoutUserInput
 }
 
 export type UserUncheckedCreateWithoutTransferRequestsToUserInput = {
@@ -1170,6 +1312,7 @@ export type UserUncheckedCreateWithoutTransferRequestsToUserInput = {
   assignedConversations?: Prisma.ConversationUncheckedCreateNestedManyWithoutAssignedUserInput
   sentMessages?: Prisma.MessageUncheckedCreateNestedManyWithoutSenderUserInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedCreateNestedManyWithoutFromUserInput
+  authSessions?: Prisma.AuthSessionUncheckedCreateNestedManyWithoutUserInput
 }
 
 export type UserCreateOrConnectWithoutTransferRequestsToUserInput = {
@@ -1208,6 +1351,7 @@ export type UserUpdateWithoutTransferRequestsFromUserInput = {
   assignedConversations?: Prisma.ConversationUpdateManyWithoutAssignedUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransferRequestsFromUserInput = {
@@ -1230,6 +1374,7 @@ export type UserUncheckedUpdateWithoutTransferRequestsFromUserInput = {
   assignedConversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUpsertWithoutTransferRequestsToUserInput = {
@@ -1263,6 +1408,7 @@ export type UserUpdateWithoutTransferRequestsToUserInput = {
   assignedConversations?: Prisma.ConversationUpdateManyWithoutAssignedUserNestedInput
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUpdateManyWithoutFromUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutTransferRequestsToUserInput = {
@@ -1285,6 +1431,7 @@ export type UserUncheckedUpdateWithoutTransferRequestsToUserInput = {
   assignedConversations?: Prisma.ConversationUncheckedUpdateManyWithoutAssignedUserNestedInput
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutFromUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserCreateManyCompanyInput = {
@@ -1325,6 +1472,7 @@ export type UserUpdateWithoutCompanyInput = {
   sentMessages?: Prisma.MessageUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateWithoutCompanyInput = {
@@ -1347,6 +1495,7 @@ export type UserUncheckedUpdateWithoutCompanyInput = {
   sentMessages?: Prisma.MessageUncheckedUpdateManyWithoutSenderUserNestedInput
   transferRequestsFromUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutFromUserNestedInput
   transferRequestsToUser?: Prisma.TransferRequestUncheckedUpdateManyWithoutToUserNestedInput
+  authSessions?: Prisma.AuthSessionUncheckedUpdateManyWithoutUserNestedInput
 }
 
 export type UserUncheckedUpdateManyWithoutCompanyInput = {
@@ -1377,6 +1526,7 @@ export type UserCountOutputType = {
   sentMessages: number
   transferRequestsFromUser: number
   transferRequestsToUser: number
+  authSessions: number
 }
 
 export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1384,6 +1534,7 @@ export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.I
   sentMessages?: boolean | UserCountOutputTypeCountSentMessagesArgs
   transferRequestsFromUser?: boolean | UserCountOutputTypeCountTransferRequestsFromUserArgs
   transferRequestsToUser?: boolean | UserCountOutputTypeCountTransferRequestsToUserArgs
+  authSessions?: boolean | UserCountOutputTypeCountAuthSessionsArgs
 }
 
 /**
@@ -1424,6 +1575,13 @@ export type UserCountOutputTypeCountTransferRequestsToUserArgs<ExtArgs extends r
   where?: Prisma.TransferRequestWhereInput
 }
 
+/**
+ * UserCountOutputType without action
+ */
+export type UserCountOutputTypeCountAuthSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AuthSessionWhereInput
+}
+
 
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1447,6 +1605,7 @@ export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = r
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   transferRequestsFromUser?: boolean | Prisma.User$transferRequestsFromUserArgs<ExtArgs>
   transferRequestsToUser?: boolean | Prisma.User$transferRequestsToUserArgs<ExtArgs>
+  authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["user"]>
 
@@ -1516,6 +1675,7 @@ export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
   sentMessages?: boolean | Prisma.User$sentMessagesArgs<ExtArgs>
   transferRequestsFromUser?: boolean | Prisma.User$transferRequestsFromUserArgs<ExtArgs>
   transferRequestsToUser?: boolean | Prisma.User$transferRequestsToUserArgs<ExtArgs>
+  authSessions?: boolean | Prisma.User$authSessionsArgs<ExtArgs>
   _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1533,6 +1693,7 @@ export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs =
     sentMessages: Prisma.$MessagePayload<ExtArgs>[]
     transferRequestsFromUser: Prisma.$TransferRequestPayload<ExtArgs>[]
     transferRequestsToUser: Prisma.$TransferRequestPayload<ExtArgs>[]
+    authSessions: Prisma.$AuthSessionPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1950,6 +2111,7 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
   sentMessages<T extends Prisma.User$sentMessagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$sentMessagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transferRequestsFromUser<T extends Prisma.User$transferRequestsFromUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transferRequestsFromUserArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransferRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   transferRequestsToUser<T extends Prisma.User$transferRequestsToUserArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$transferRequestsToUserArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TransferRequestPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  authSessions<T extends Prisma.User$authSessionsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$authSessionsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AuthSessionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2489,6 +2651,30 @@ export type User$transferRequestsToUserArgs<ExtArgs extends runtime.Types.Extens
   take?: number
   skip?: number
   distinct?: Prisma.TransferRequestScalarFieldEnum | Prisma.TransferRequestScalarFieldEnum[]
+}
+
+/**
+ * User.authSessions
+ */
+export type User$authSessionsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AuthSession
+   */
+  select?: Prisma.AuthSessionSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AuthSession
+   */
+  omit?: Prisma.AuthSessionOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AuthSessionInclude<ExtArgs> | null
+  where?: Prisma.AuthSessionWhereInput
+  orderBy?: Prisma.AuthSessionOrderByWithRelationInput | Prisma.AuthSessionOrderByWithRelationInput[]
+  cursor?: Prisma.AuthSessionWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AuthSessionScalarFieldEnum | Prisma.AuthSessionScalarFieldEnum[]
 }
 
 /**

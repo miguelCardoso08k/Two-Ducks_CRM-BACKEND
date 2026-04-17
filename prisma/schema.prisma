@@ -40,6 +40,12 @@ enum UserAvailabilityStatus {
   OFF_SHIFT
 }
 
+enum AuthSessionStatus {
+  ACTIVE
+  REVOKED
+  EXPIRED
+}
+
 enum ChannelType {
   WHATSAPP
   INSTAGRAM
@@ -153,6 +159,7 @@ model Company {
   automationRules         AutomationRule[]
   businessHours           BusinessHour[]
   subscription            Subscription?
+  authSessions            AuthSession[]
 
   @@map("companies")
 }
@@ -195,11 +202,31 @@ model User {
   sentMessages             Message[]              @relation("MessageSenderUser")
   transferRequestsFromUser TransferRequest[]      @relation("TransferRequestFromUser")
   transferRequestsToUser   TransferRequest[]      @relation("TransferRequestToUser")
+  authSessions             AuthSession[]
 
   @@index([companyId])
   @@index([companyId, status])
   @@index([companyId, inboxStatus, availabilityStatus])
   @@map("users")
+}
+
+model AuthSession {
+  id        String            @id @default(cuid())
+  jti       String            @unique
+  userId    String            @map("user_id")
+  companyId String            @map("company_id")
+  status    AuthSessionStatus @default(ACTIVE)
+  expiresAt DateTime          @map("expires_at")
+  revokedAt DateTime?         @map("revoked_at")
+  createdAt DateTime          @default(now()) @map("created_at")
+  updatedAt DateTime          @updatedAt @map("updated_at")
+  user      User              @relation(fields: [userId], references: [id], onDelete: Cascade)
+  company   Company           @relation(fields: [companyId], references: [id], onDelete: Cascade)
+
+  @@index([userId, status])
+  @@index([companyId, status])
+  @@index([expiresAt])
+  @@map("auth_sessions")
 }
 
 model Customer {

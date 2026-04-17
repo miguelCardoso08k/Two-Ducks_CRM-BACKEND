@@ -261,6 +261,23 @@ export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
   _max?: Prisma.NestedDateTimeNullableFilter<$PrismaModel>
 }
 
+export type EnumAuthSessionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuthSessionStatus | Prisma.EnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuthSessionStatusFilter<$PrismaModel> | $Enums.AuthSessionStatus
+}
+
+export type EnumAuthSessionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuthSessionStatus | Prisma.EnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuthSessionStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthSessionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAuthSessionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAuthSessionStatusFilter<$PrismaModel>
+}
+
 export type StringNullableFilter<$PrismaModel = never> = {
   equals?: string | Prisma.StringFieldRefInput<$PrismaModel> | null
   in?: string[] | Prisma.ListStringFieldRefInput<$PrismaModel> | null
@@ -826,6 +843,23 @@ export type NestedIntNullableFilter<$PrismaModel = never> = {
   gt?: number | Prisma.IntFieldRefInput<$PrismaModel>
   gte?: number | Prisma.IntFieldRefInput<$PrismaModel>
   not?: Prisma.NestedIntNullableFilter<$PrismaModel> | number | null
+}
+
+export type NestedEnumAuthSessionStatusFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuthSessionStatus | Prisma.EnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuthSessionStatusFilter<$PrismaModel> | $Enums.AuthSessionStatus
+}
+
+export type NestedEnumAuthSessionStatusWithAggregatesFilter<$PrismaModel = never> = {
+  equals?: $Enums.AuthSessionStatus | Prisma.EnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  in?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  notIn?: $Enums.AuthSessionStatus[] | Prisma.ListEnumAuthSessionStatusFieldRefInput<$PrismaModel>
+  not?: Prisma.NestedEnumAuthSessionStatusWithAggregatesFilter<$PrismaModel> | $Enums.AuthSessionStatus
+  _count?: Prisma.NestedIntFilter<$PrismaModel>
+  _min?: Prisma.NestedEnumAuthSessionStatusFilter<$PrismaModel>
+  _max?: Prisma.NestedEnumAuthSessionStatusFilter<$PrismaModel>
 }
 
 export type NestedStringNullableFilter<$PrismaModel = never> = {

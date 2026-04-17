@@ -11,6 +11,7 @@
 export type * from './models/Company'
 export type * from './models/BusinessHour'
 export type * from './models/User'
+export type * from './models/AuthSession'
 export type * from './models/Customer'
 export type * from './models/Channel'
 export type * from './models/Conversation'
